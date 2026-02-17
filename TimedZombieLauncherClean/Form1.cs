@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Security.Cryptography;
 using System.Windows.Forms;
@@ -12,7 +13,56 @@ namespace TimedZombieLauncherClean
         public Form1()
         {
             InitializeComponent();
+            ApplyTheme();
+            WireButtonEffects();
+
         }
+
+        private void ApplyTheme()
+        {
+            BackColor = Color.FromArgb(18, 18, 22);
+
+            lblStatus.ForeColor = Color.FromArgb(0, 255, 140);
+            lblStatus.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+
+            txtLog.BackColor = Color.FromArgb(10, 10, 12);
+            txtLog.ForeColor = Color.FromArgb(190, 255, 210);
+            txtLog.BorderStyle = BorderStyle.FixedSingle;
+            txtLog.Font = new Font("Consolas", 10);
+
+            btnLaunch.FlatStyle = FlatStyle.Flat;
+            btnLaunch.FlatAppearance.BorderSize = 2;
+            btnLaunch.FlatAppearance.BorderColor = Color.FromArgb(0, 255, 140);
+            btnLaunch.BackColor = Color.FromArgb(25, 25, 30);
+            btnLaunch.ForeColor = Color.FromArgb(0, 255, 140);
+            btnLaunch.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+        }
+
+        private void WireButtonEffects()
+        {
+            btnLaunch.MouseEnter += (_, __) =>
+            {
+                btnLaunch.BackColor = Color.FromArgb(0, 255, 140);
+                btnLaunch.ForeColor = Color.Black;
+            };
+
+            btnLaunch.MouseLeave += (_, __) =>
+            {
+                btnLaunch.BackColor = Color.FromArgb(25, 25, 30);
+                btnLaunch.ForeColor = Color.FromArgb(0, 255, 140);
+            };
+
+            btnLaunch.MouseDown += (_, __) =>
+            {
+                btnLaunch.BackColor = Color.FromArgb(0, 200, 110);
+            };
+
+            btnLaunch.MouseUp += (_, __) =>
+            {
+                btnLaunch.BackColor = Color.FromArgb(0, 255, 140);
+            };
+        }
+
 
         private void btnLaunch_Click(object sender, EventArgs e)
         {
@@ -186,5 +236,9 @@ namespace TimedZombieLauncherClean
                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
