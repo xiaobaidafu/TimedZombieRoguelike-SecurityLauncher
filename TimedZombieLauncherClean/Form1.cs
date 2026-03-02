@@ -77,12 +77,12 @@ namespace TimedZombieLauncherClean
             }
         }
         // Change to the exe name of your Unity build
-        private const string GameExeName = "TimedZombieRoguelike.exe";
+        private const string GameExeName = "SeniorDesignProject.exe";
 
         private static readonly HashSet<string> BannedProcesses =
             new HashSet<string>(StringComparer.OrdinalIgnoreCase)
             //delete chrome when use, this is for testing. You can remove it when you use, or add other processes you want to ban.
-            { "cheatengine", "artmoney", "ollydbg", "x64dbg", "processhacker","chrome" };
+            { "cheatengine", "artmoney", "ollydbg", "x64dbg", "processhacker" };
 
         private void RunChecksAndLaunch()
         {
@@ -202,6 +202,7 @@ namespace TimedZombieLauncherClean
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = exePath,
+                    Arguments = "--secure-launch",
                     WorkingDirectory = baseDir,
                     UseShellExecute = true
                 });
