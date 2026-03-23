@@ -79,10 +79,14 @@ namespace TimedZombieLauncherClean
         // Change to the exe name of your Unity build
         private const string GameExeName = "SeniorDesignProject.exe";
 
-        private static readonly HashSet<string> BannedProcesses =
-            new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-            //delete chrome when use, this is for testing. You can remove it when you use, or add other processes you want to ban.
-            { "cheatengine", "artmoney", "ollydbg", "x64dbg", "processhacker" };
+        private static readonly string[] BannedKeywords =
+        {
+            "cheatengine",
+            "artmoney",
+            "ollydbg",
+            "x64dbg",
+            "processhacker"
+        };
 
         private void RunChecksAndLaunch()
         {
@@ -124,11 +128,17 @@ namespace TimedZombieLauncherClean
             {
                 try
                 {
-                    string name = p.ProcessName.ToLower();
-                    if (BannedProcesses.Contains(name))
+                    string processName = p.ProcessName?.ToLowerInvariant() ?? "";
+                    string windowTitle = p.MainWindowTitle?.ToLowerInvariant() ?? "";
+                    string combined = processName + " " + windowTitle;
+
+                    foreach (var keyword in BannedKeywords)
                     {
-                        foundProcess = name;
-                        return true;
+                        if (combined.Contains(keyword.ToLowerInvariant()))
+                        {
+                            foundProcess = $"{p.ProcessName} (PID: {p.Id})";
+                            return true;
+                        }
                     }
                 }
                 catch { }
